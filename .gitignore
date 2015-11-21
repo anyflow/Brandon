@@ -1,1 +1,6 @@
 Brandon/bin
+
+.vs
+**/obj
+**/Debug
+**/Release
