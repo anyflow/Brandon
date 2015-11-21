@@ -1,0 +1,21 @@
+﻿<Window x:Class="Brandon.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Brandon"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="613.462" Width="453.846">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="37*"/>
+            <ColumnDefinition Width="186*" />
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0" Background="Red" />
+        <DockPanel Grid.Column="1">
+            <DockPanel DockPanel.Dock="Top" Name="title" Background="Green" Height="39" />
+            <DockPanel DockPanel.Dock="Top" Name="search" Background="Blue" Height="39" />
+            <ListBox DockPanel.Dock="Top" Name="listboxList" Background="Purple" />
+        </DockPanel>
+    </Grid>
+</Window>
