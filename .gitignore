@@ -1,6 +1,4 @@
-Brandon/bin
-
 .vs
-**/obj
-**/Debug
-**/Release
+
+Entrypoint/bin
+Entrypoint/obj
