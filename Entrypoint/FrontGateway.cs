@@ -16,7 +16,7 @@ namespace Brandon.Gateway
         
         public FrontGateway()
         {
-            ServerBaseAddress = "http://localhost:8080/";
+            ServerBaseAddress = "http://192.168.0.5:8080";
         }
 
         public static Int32 toUnixTimestamp(DateTime input)
@@ -43,7 +43,7 @@ namespace Brandon.Gateway
                     message = message
                 });
                 
-                var request = new HttpRequestMessage(HttpMethod.Post, ServerBaseAddress + "room");
+                var request = new HttpRequestMessage(HttpMethod.Post, ServerBaseAddress + "/room");
                 request.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await client.SendAsync(request);
@@ -60,7 +60,7 @@ namespace Brandon.Gateway
 
                 var room = new Room()
                 {
-                    Id = resJson["roomId"].ToString(),
+                    Id = resJson["id"].ToString(),
                     CreateDate = toDateTime(Int32.Parse(resJson["createDate"].ToString()))
                 };
 
