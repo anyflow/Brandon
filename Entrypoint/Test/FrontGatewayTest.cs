@@ -30,6 +30,7 @@ namespace Brandon.Test
             
             var ret = (new FrontGateway()).CreateRoom("sampleName", "sampleMessage", inviteeIds);
             
+
             System.Diagnostics.Debug.Write(ret.Result.Item1.Name);
 
             StringAssert.Contains(ret.Result.Item1.Name, "sampleName");
