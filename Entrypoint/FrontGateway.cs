@@ -7,6 +7,7 @@ using System.Net.Http;
 using Brandon.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net;
 
 namespace Brandon.Gateway
 {
@@ -16,7 +17,7 @@ namespace Brandon.Gateway
         
         public FrontGateway()
         {
-            ServerBaseAddress = "http://192.168.0.5:8080";
+            ServerBaseAddress = "http://192.168.0.5:8090";
         }
 
         public static Int32 toUnixTimestamp(DateTime input)
@@ -24,10 +25,18 @@ namespace Brandon.Gateway
             return (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
         }
 
-        public static DateTime toDateTime(Int32 unixTimestamp)
+        public static DateTime toDateTime(Int64 unixTimestamp)
         {
             DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return sTime.AddSeconds(unixTimestamp);
+            return sTime.AddTicks(unixTimestamp);
+        }
+
+        public async Task<HttpResponseMessage> getHttpbin()
+        {
+            using (var client = new HttpClient())
+            {
+                return await client.GetAsync("https://httpbin.org/get?foo=bar");
+            }
         }
 
         public async Task<Tuple<Room, MessageT>> CreateRoom(String name, String message, List<string> inviteeIds)
@@ -43,11 +52,12 @@ namespace Brandon.Gateway
                     message = message
                 });
                 
-                var request = new HttpRequestMessage(HttpMethod.Post, ServerBaseAddress + "/room");
-                request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                var request = new HttpRequestMessage();
 
-                var response = await client.SendAsync(request);
-                
+                client.DefaultRequestHeaders.ExpectContinue = false;
+
+                var response = await client.PostAsync(ServerBaseAddress + "/room", new StringContent(json, Encoding.UTF8, "application/json"));
+                                
                 if(response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     throw new HttpRequestException();
@@ -56,12 +66,12 @@ namespace Brandon.Gateway
 
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                var resJson = new JObject(responseContent);
-
+                var resJson = JObject.Parse(responseContent);
+                
                 var room = new Room()
                 {
                     Id = resJson["id"].ToString(),
-                    CreateDate = toDateTime(Int32.Parse(resJson["createDate"].ToString()))
+                    CreateDate = toDateTime(Int64.Parse(resJson["createDate"].ToString()))
                 };
 
                 var messageRet = new MessageT()
