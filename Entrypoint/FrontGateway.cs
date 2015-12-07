@@ -13,11 +13,12 @@ namespace Brandon.Gateway
 {
     public class FrontGateway
     {
-        private String ServerBaseAddress { get; set; }
+        public readonly static FrontGateway Self = new FrontGateway();
+
+        private String ServerBaseAddress { get { return "http://192.168.0.5:8090"; } }
         
-        public FrontGateway()
+        private FrontGateway()
         {
-            ServerBaseAddress = "http://192.168.0.5:8090";
         }
 
         public static Int32 toUnixTimestamp(DateTime input)
@@ -52,8 +53,6 @@ namespace Brandon.Gateway
                     message = message
                 });
                 
-                var request = new HttpRequestMessage();
-
                 client.DefaultRequestHeaders.ExpectContinue = false;
 
                 var response = await client.PostAsync(ServerBaseAddress + "/room", new StringContent(json, Encoding.UTF8, "application/json"));

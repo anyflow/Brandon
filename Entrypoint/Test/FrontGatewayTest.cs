@@ -13,12 +13,10 @@ namespace Brandon.Test
     [TestClass]
     public class FrontGatewayTest
     {
-        private string baseAddress = "http://192.168.0.5:8090/room";
-        private string inviterId = "09bab373-ff80-42ca-a221-ba3e8345a469";
         private List<string> inviteeIds = new List<string>() { "9658b662-9352-46d5-b778-908bc90204a6", "7db4ee17-5e7c-4a8e-b868-571168f7fcb1" };
 
         [TestMethod]
-        public void createRoomTest()
+        public void TestCreateRoom()
         {
             MyInformation.Me = new User()
             {
@@ -28,8 +26,7 @@ namespace Brandon.Test
                 CreateDate = DateTime.Now
             };
 
-            var fg = new FrontGateway();
-            var ret = fg.CreateRoom("sampleName", "sampleMessage", inviteeIds).Result;
+            var ret = FrontGateway.Self.CreateRoom("sampleName", "sampleMessage", inviteeIds).Result;
 
             System.Diagnostics.Debug.Write(ret.Item1.Id);
 
@@ -37,10 +34,9 @@ namespace Brandon.Test
         }
 
         [TestMethod]
-        public void testGetHttpbin()
+        public void TestGetHttpbin()
         {
-            var fg = new FrontGateway();
-            var ret = fg.getHttpbin().Result;
+            var ret = FrontGateway.Self.getHttpbin().Result;
 
             System.Diagnostics.Debug.WriteLine(ret.Content.ToString());
             Assert.IsNotNull(ret.Content);

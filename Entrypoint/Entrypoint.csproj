@@ -55,6 +55,10 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="websocket-sharp-with-proxy-support, Version=1.0.2.28248, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <HintPath>..\packages\websocket-sharp-with-proxy-support.1.9.1\lib\net35-client\websocket-sharp-with-proxy-support.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -67,7 +71,9 @@
     <Compile Include="Encryption.cs" />
     <Compile Include="Model\MessageT.cs" />
     <Compile Include="MyInformation.cs" />
+    <Compile Include="RearGateway.cs" />
     <Compile Include="Test\FrontGatewayTest.cs" />
+    <Compile Include="Test\RearGatewayTest.cs" />
     <Compile Include="Test\UtilityTest.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

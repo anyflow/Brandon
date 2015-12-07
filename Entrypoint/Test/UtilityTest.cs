@@ -12,7 +12,7 @@ namespace Brandon.Test
     [TestClass]
     public class UtilityTest
     {
-        private string generateJson()
+        private string GenerateJson()
         {
             List<User> users = new List<User>();
             var user1 = new User()
@@ -37,9 +37,9 @@ namespace Brandon.Test
         }
 
         [TestMethod]
-        public void serializationTest()
+        public void TestSerialization()
         {
-            string json = generateJson();
+            string json = GenerateJson();
 
             System.Diagnostics.Debug.Write(json);
 
@@ -47,9 +47,9 @@ namespace Brandon.Test
         }
 
         [TestMethod]
-        public void DeserializationTest()
+        public void TestDeserialization()
         {
-            string json = generateJson();
+            string json = GenerateJson();
 
             List<User> users = JsonConvert.DeserializeObject<List<User>>(json);
 
